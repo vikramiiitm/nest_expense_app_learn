@@ -1,4 +1,4 @@
-import { Controller, Param, Body, Get, Delete, Patch, Post, ParseIntPipe, ParseUUIDPipe} from "@nestjs/common";
+import { Controller, Param, Body, Get, Delete, Patch, Post, ParseIntPipe, ParseUUIDPipe, ParseEnumPipe} from "@nestjs/common";
 import { data, ReportType } from "./data";
 import { AppService } from "./app.service";
 
@@ -27,7 +27,7 @@ export class AppController {
 
   @Post()
   createReport(
-    @Param("type") type: string,
+    @Param("type", new ParseEnumPipe(ReportType)) type: string,
     @Body() {amount, source}: { amount: number;source: string }
   ) {
     const reportType = type === ReportType.INCOME ? ReportType.INCOME : ReportType.EXPENSE;
