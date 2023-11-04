@@ -1,3 +1,6 @@
+import { UUID } from "crypto";
+import { v4 as uuid } from "uuid";
+
 export const data: Data = {
         report: []
 }
@@ -21,7 +24,7 @@ interface Data {
 
 
 data.report.push({
-    id: "uuid1",
+    id: uuid(),
     source: "Salary",
     amount: 40000,
     created_at: new Date(),
@@ -30,7 +33,7 @@ data.report.push({
 })
 
 data.report.push({
-    id: "uuid2",
+    id: uuid(),
     source: "Salary",
     amount: 70000,
     created_at: new Date(),
@@ -39,7 +42,7 @@ data.report.push({
 })
 
 data.report.push({
-    id: "uuid3",
+    id:uuid(),
     source: "Salary",
     amount: 100000,
     created_at: new Date(),
@@ -48,18 +51,9 @@ data.report.push({
 })
 
 data.report.push({
-    id: "uuid4",
+    id: uuid(),
     source: "Salary",
     amount: 25000,
-    created_at: new Date(),
-    updated_at: new Date(),
-    type: ReportType.EXPENSE
-})
-
-data.report.push({
-    id: "uuid5",
-    source: "Salary",
-    amount: 7000,
     created_at: new Date(),
     updated_at: new Date(),
     type: ReportType.EXPENSE

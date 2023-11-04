@@ -14,7 +14,7 @@ export class AppService {
   getReportByIdService(type: ReportType, id: string) {
     return data.report
     .filter((report) => report.type === type)
-    .find((report) => report.id === id)
+    .find((report) => report.id == id)
   }
 
   createReportService(type: ReportType, amount: number, source: string) {
