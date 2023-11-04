@@ -10,14 +10,14 @@ export class AppController {
   ){}
 
   @Get()
-  getAllREports(@Param('type') type: string) {
+  getAllREports(@Param('type', new ParseEnumPipe(ReportType)) type: string) {
     const reportType = type === ReportType.INCOME ? ReportType.INCOME : ReportType.EXPENSE
     return this.appService.getAllReportsService(reportType)
   }
 
   @Get(":id")
   getReportById(
-    @Param('type') type: string,
+    @Param('type', new ParseEnumPipe(ReportType)) type: string,
     @Param('id', ParseUUIDPipe) id: string
   ) {
     const reportType = type === ReportType.INCOME ? ReportType.INCOME : ReportType.EXPENSE;
