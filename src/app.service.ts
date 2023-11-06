@@ -2,6 +2,8 @@ import { ReportType, data } from "./data";
 import { Injectable } from "@nestjs/common/decorators";
 import { v4 as uuid } from "uuid";
 
+interface Report {amount: number, source: string}
+
 @Injectable()
 export class AppService {
 
@@ -17,17 +19,35 @@ export class AppService {
     .find((report) => report.id == id)
   }
 
-  createReportService(type: ReportType, amount: number, source: string) {
+  createReportService(type: ReportType, body: Report) {
     const newReport = {
       id: uuid(),
-      source: source,
-      amount: amount,
+      source: body.source,
+      amount: body.amount,
       created_at: new Date(),
       updated_at: new Date(),
-      type: type
+      type: type === 'income' ? ReportType.INCOME : ReportType.EXPENSE
     }
     data.report.push(newReport)
-    return "created" 
+    return newReport 
   }
+  updateReportService(type: ReportType, id: string, body: Report) {
+    const reportToUpdate = data.report
+      .filter((report) => report.type === type)
+      .find((report) => report.id == id)
+
+    if (!reportToUpdate) return;
+    const reportIndex = data.report.findIndex(
+      (report) => report.id === reportToUpdate.id,
+    );
+    const new_data = {
+      ...data.report[reportIndex],
+      ...body,
+      updated_at: new Date()
+    }
+    data.report[reportIndex] = new_data
+    return new_data
+  }
+
 
 }

@@ -1,5 +1,5 @@
 import { Controller, Param, Body, Get, Delete, Patch, Post, ParseIntPipe, ParseUUIDPipe, ParseEnumPipe} from "@nestjs/common";
-import { data, ReportType } from "./data";
+import { ReportType } from "./data";
 import { AppService } from "./app.service";
 import { CreateReportDTO } from "./dtos/report.dto";
 
@@ -32,15 +32,19 @@ export class AppController {
     @Body() {amount, source}: CreateReportDTO
   ) {
     const reportType = type === ReportType.INCOME ? ReportType.INCOME : ReportType.EXPENSE;
-    this.appService.createReportService(reportType,amount, source)
+    return this.appService.createReportService(reportType, {amount, source})
 
   }
   @Patch(":id")
   updateReportById(
     @Param('type') type: string,
-    @Param('id') id: string
-  ) {
-    return {"Updated Report": 1}
+    @Param('id') id: string,
+    @Body() body: CreateReportDTO   
+    ) {
+    const reportType = type === ReportType.INCOME ? ReportType.INCOME : ReportType.EXPENSE;
+    console.log('update calling')
+    return this.appService.updateReportService(reportType, id, body)
+
   }
   @Delete(":id")
   deleteReportById(
