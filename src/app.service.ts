@@ -14,15 +14,19 @@ interface updateReport {
 export class AppService {
 
   getAllReportsService(type: ReportType): ReportResponseDto[] {
-    return data.report.filter((report) => {
-      return report.type === type;
-    });
+    return data.report
+    .filter((report) => report.type === type)
+    .map((report) => new ReportResponseDto(report)); //convert the reposrt list to ReportReponseDTO
   }
 
   getReportByIdService(type: ReportType, id: string): ReportResponseDto {
-    return data.report
+    const report =  data.report
     .filter((report) => report.type === type)
     .find((report) => report.id == id)
+
+    if (!report) return;
+
+    return new ReportResponseDto(report);
   }
 
   createReportService(type: ReportType, body: Report): ReportResponseDto {
@@ -35,7 +39,7 @@ export class AppService {
       type: type === 'income' ? ReportType.INCOME : ReportType.EXPENSE
     }
     data.report.push(newReport)
-    return newReport 
+    return new ReportResponseDto(newReport);
   }
   updateReportService(type: ReportType, id: string, body: updateReport): ReportResponseDto {
     const reportToUpdate = data.report
@@ -52,7 +56,7 @@ export class AppService {
       updated_at: new Date()
     }
     data.report[reportIndex] = new_data
-    return new_data
+    return new ReportResponseDto(data.report[reportIndex])
   }
 
 

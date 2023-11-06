@@ -36,4 +36,11 @@ export class ReportResponseDto {
     updated_at: Date;
 
     type: ReportType;
+
+
+    // this constructor is used to initialize object with partial properties mentioned above
+    // Use ReportResponseDto to pass object for response
+    constructor(partial: Partial<ReportResponseDto>){
+        Object.assign(this, partial)
+    }
 }
