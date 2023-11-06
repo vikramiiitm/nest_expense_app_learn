@@ -1,7 +1,7 @@
 import { Controller, Param, Body, Get, Delete, Patch, Post, ParseIntPipe, ParseUUIDPipe, ParseEnumPipe} from "@nestjs/common";
 import { ReportType } from "./data";
 import { AppService } from "./app.service";
-import { CreateReportDTO } from "./dtos/report.dto";
+import { CreateReportDTO, UpdateReportDTO } from "./dtos/report.dto";
 
 @Controller("report/:type/")
 export class AppController {
@@ -39,7 +39,7 @@ export class AppController {
   updateReportById(
     @Param('type') type: string,
     @Param('id') id: string,
-    @Body() body: CreateReportDTO   
+    @Body() body: UpdateReportDTO,
     ) {
     const reportType = type === ReportType.INCOME ? ReportType.INCOME : ReportType.EXPENSE;
     console.log('update calling')
