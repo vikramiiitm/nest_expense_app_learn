@@ -29,10 +29,11 @@ export class AppController {
   @Post()
   createReport(
     @Param("type", new ParseEnumPipe(ReportType)) type: string,
-    @Body() {amount, source}: CreateReportDTO
+    @Body() body: CreateReportDTO
   ) {
+    console.log('body', body)
     const reportType = type === ReportType.INCOME ? ReportType.INCOME : ReportType.EXPENSE;
-    return this.appService.createReportService(reportType, {amount, source})
+    return this.appService.createReportService(reportType, body)
 
   }
   @Patch(":id")
@@ -41,6 +42,7 @@ export class AppController {
     @Param('id') id: string,
     @Body() body: UpdateReportDTO,
     ) {
+      console.log('body', body)
     const reportType = type === ReportType.INCOME ? ReportType.INCOME : ReportType.EXPENSE;
     console.log('update calling')
     return this.appService.updateReportService(reportType, id, body)
